@@ -19,8 +19,8 @@
 
   <view class="section-card form-card">
     <view class="form-item">
-      <view class="form-label">账号</view>
-      <input class="form-input" placeholder="请输入账号" value="{{form.username}}" data-field="username" bindinput="handleInput" />
+      <view class="form-label">手机号码</view>
+      <input class="form-input" placeholder="请输入账号" value="{{form.phoneNumber}}" data-field="phoneNumber" bindinput="handleInput" />
     </view>
     <view class="form-item">
       <view class="form-label">密码</view>
@@ -32,7 +32,28 @@
     </view>
     <view class="form-item" wx:if="{{activeMode === 'register'}}">
       <view class="form-label">昵称/姓名</view>
-      <input class="form-input" placeholder="可选，默认为账号名" value="{{form.name}}" data-field="name" bindinput="handleInput" />
+      <input class="form-input" placeholder="请输入昵称" value="{{form.nickname}}" data-field="nickname" bindinput="handleInput" />
+    </view>
+    <view class="form-item" wx:if="{{activeMode === 'register'}}">
+      <view class="form-label">真实姓名</view>
+      <input class="form-input" placeholder="请输入真实姓名" value="{{form.realName}}" data-field="realName" bindinput="handleInput" />
+    </view>
+    <view class="form-item" wx:if="{{activeMode === 'register'}}">
+      <view class="form-label">身份证号码</view>
+      <input class="form-input" placeholder="请输入身份证号码" value="{{form.idCardNumber}}" data-field="idCardNumber" bindinput="handleInput" />
+    </view>
+    <view class="form-item" wx:if="{{activeMode === 'register'}}">
+      <view class="form-label">性别</view>
+      <picker range="{{['男','女']}}" value="{{genderIndex}}" bindchange="onGenderChange">
+      <view>{{form.gender === 0 ? '男' : form.gender === 1 ? '女' : '请选择性别'}}</view>
+      </picker>
+    </view>
+    <view class="form-item" wx:if="{{activeMode === 'register'}}">
+      <view class="form-label">头像</view>
+      <view class="upload-avatar">
+        <button bindtap="onChooseImage">上传头像</button>
+        <image wx:if="{{profile}}" src="{{profile}}" class="avatar-preview" />
+      </view>
     </view>
     <button class="btn-primary submit-btn" loading="{{isSubmitting}}" bindtap="handleSubmit">
       {{activeMode === 'login' ? '立即登录' : '注册并登录'}}

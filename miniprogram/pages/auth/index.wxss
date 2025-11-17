@@ -68,7 +68,7 @@
   width: 100%;
   background: #f7fafc;
   border-radius: 16rpx;
-  padding: 20rpx;
+  padding: 4rpx;
   box-sizing: border-box;
 }
 

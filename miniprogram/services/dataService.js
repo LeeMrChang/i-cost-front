@@ -547,7 +547,7 @@ function registerAccount(payload = {}) {
   const username = (payload.username || '').trim();
   const password = (payload.password || '').trim();
   if (!username || !password) {
-    return { success: false, message: '请输入用户名和密码' };
+    return { success: false, message: '请输入手机号和密码' };
   }
   let response = { success: false, message: '' };
   withState((state) => {
