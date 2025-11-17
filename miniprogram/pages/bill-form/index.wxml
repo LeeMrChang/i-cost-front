@@ -1,0 +1,79 @@
+<view class="page">
+  <view class="section-card">
+    <view class="section-title">
+      <text>账单录入</text>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">账本</view>
+      <picker range="{{ledgerOptions}}" range-key="name" value="{{ledgerIndex}}" bindchange="handleLedgerChange">
+        <view class="picker-value">{{ledgerOptions[ledgerIndex].name}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">类型</view>
+      <picker range="{{typeOptions}}" range-key="label" value="{{typeIndex}}" bindchange="handleTypeChange">
+        <view class="picker-value">{{typeOptions[typeIndex].label}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">分类</view>
+      <picker range="{{categoryOptions}}" range-key="name" value="{{categoryIndex}}" bindchange="handleCategoryChange">
+        <view class="picker-value">
+          {{categoryOptions.length ? categoryOptions[categoryIndex].name : '暂无分类'}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">金额 (¥)</view>
+      <input class="form-input" type="digit" value="{{form.amount}}" data-field="amount" bindinput="handleInput" placeholder="请输入金额" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">支付方式</view>
+      <picker range="{{paymentOptions}}" value="{{paymentIndex}}" bindchange="handlePaymentChange">
+        <view class="picker-value">{{paymentOptions[paymentIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="form-row">
+      <view class="form-item half">
+        <view class="form-label">日期</view>
+        <picker mode="date" value="{{form.date}}" bindchange="handleDateChange">
+          <view class="picker-value">{{form.date}}</view>
+        </picker>
+      </view>
+      <view class="form-item half">
+        <view class="form-label">时间</view>
+        <picker mode="time" value="{{form.time}}" bindchange="handleTimeChange">
+          <view class="picker-value">{{form.time}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">报销状态</view>
+      <picker range="{{['不报销','待报销','已报销']}}" value="{{reimburseIndex}}" bindchange="handleReimburseChange">
+        <view class="picker-value">{{['不报销','待报销','已报销'][reimburseIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">流转类型</view>
+      <picker range="{{['结算/还款','收款','转账','充值','借入','借出']}}" value="{{flowIndex}}" bindchange="handleFlowChange">
+        <view class="picker-value">{{['结算/还款','收款','转账','充值','借入','借出'][flowIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">备注</view>
+      <textarea class="form-textarea" placeholder="可记录地点、参与人等" value="{{form.note}}" data-field="note" bindinput="handleInput"></textarea>
+    </view>
+
+    <button class="btn-primary" bindtap="handleSubmit">保存账单</button>
+  </view>
+</view>
+

@@ -1,0 +1,52 @@
+.ledger-name {
+  font-size: 34rpx;
+  font-weight: 600;
+  margin-bottom: 12rpx;
+}
+
+.ledger-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16rpx;
+  margin: 24rpx 0;
+}
+
+.ledger-actions {
+  display: flex;
+  gap: 16rpx;
+}
+
+.btn-ghost.danger {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+.form-card .form-item {
+  margin-bottom: 24rpx;
+}
+
+.form-label {
+  font-size: 26rpx;
+  color: #6b7c93;
+  margin-bottom: 12rpx;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  background: #f7fafc;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+.form-textarea {
+  min-height: 160rpx;
+}
+
+.picker-value {
+  background: #f7fafc;
+  border-radius: 16rpx;
+  padding: 20rpx;
+}
+

@@ -1,0 +1,120 @@
+.user-card .hello {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.user-card .avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  box-shadow: 0 12rpx 24rpx rgba(15, 52, 96, 0.15);
+}
+
+.switch-link {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #0abf88;
+  text-decoration: underline;
+}
+
+.mt-8 {
+  margin-top: 8rpx;
+}
+
+.action-row {
+  margin-top: 32rpx;
+  display: flex;
+  gap: 20rpx;
+}
+
+.action-row .btn-primary,
+.action-row .btn-ghost {
+  flex: 1;
+}
+
+.ledger-picker {
+  min-width: 180rpx;
+  text-align: right;
+}
+
+.ledger-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16rpx;
+  margin-bottom: 12rpx;
+}
+
+.stat-item .amount {
+  font-size: 36rpx;
+}
+
+.amount.green {
+  color: #0abf88;
+}
+
+.amount.orange {
+  color: #f2994a;
+}
+
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 26rpx;
+  margin-bottom: 12rpx;
+}
+
+.progress {
+  height: 18rpx;
+  background: #eef2f7;
+  border-radius: 999rpx;
+  overflow: hidden;
+  margin-bottom: 16rpx;
+}
+
+.progress-inner {
+  height: 100%;
+  background: linear-gradient(90deg, #0abf88, #2ec4b6);
+}
+
+.sub-stat {
+  display: flex;
+  justify-content: space-between;
+}
+
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+}
+
+.quick-item {
+  background: #f7fafc;
+  border-radius: 20rpx;
+  padding: 24rpx;
+}
+
+.btn-ghost.mini {
+  padding: 10rpx 20rpx;
+  font-size: 24rpx;
+}
+
+.entry-row {
+  display: flex;
+  gap: 20rpx;
+}
+
+.entry {
+  flex: 1;
+  background: #f7fafc;
+  border-radius: 20rpx;
+  padding: 28rpx;
+}
+
+.entry-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 12rpx;
+}
+

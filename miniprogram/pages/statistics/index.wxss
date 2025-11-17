@@ -1,0 +1,73 @@
+.time-tabs {
+  display: flex;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+
+.time-tab {
+  padding: 12rpx 32rpx;
+  border-radius: 999rpx;
+  background: #f1f5f9;
+  font-size: 26rpx;
+  color: #6b7c93;
+}
+
+.time-tab.active {
+  background: #0abf88;
+  color: #ffffff;
+}
+
+.custom-range {
+  margin-top: 24rpx;
+  display: flex;
+  gap: 16rpx;
+}
+
+.picker-value {
+  padding: 18rpx 24rpx;
+  background: #f7fafc;
+  border-radius: 16rpx;
+  font-size: 26rpx;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16rpx;
+}
+
+.summary-grid.small {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.breakdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 28rpx;
+}
+
+.ledger-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.ledger-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f7fafc;
+  padding: 24rpx;
+  border-radius: 20rpx;
+}
+
+.ledger-name {
+  font-weight: 600;
+}
+

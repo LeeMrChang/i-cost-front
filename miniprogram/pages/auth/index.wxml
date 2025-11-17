@@ -1,0 +1,43 @@
+<view class="auth-page">
+  <view class="branding">
+    <view class="logo">iCost</view>
+    <view class="subtitle">家庭日常记账助手</view>
+    <view class="tips">{{tips}}</view>
+  </view>
+
+  <view class="tabs">
+    <view
+      class="tab {{activeMode === item.value ? 'active' : ''}}"
+      wx:for="{{modeTabs}}"
+      wx:key="value"
+      data-mode="{{item.value}}"
+      bindtap="switchMode"
+    >
+      {{item.label}}
+    </view>
+  </view>
+
+  <view class="section-card form-card">
+    <view class="form-item">
+      <view class="form-label">账号</view>
+      <input class="form-input" placeholder="请输入账号" value="{{form.username}}" data-field="username" bindinput="handleInput" />
+    </view>
+    <view class="form-item">
+      <view class="form-label">密码</view>
+      <input class="form-input" password placeholder="请输入密码" value="{{form.password}}" data-field="password" bindinput="handleInput" />
+    </view>
+    <view class="form-item" wx:if="{{activeMode === 'register'}}">
+      <view class="form-label">确认密码</view>
+      <input class="form-input" password placeholder="再次输入密码" value="{{form.confirmPassword}}" data-field="confirmPassword" bindinput="handleInput" />
+    </view>
+    <view class="form-item" wx:if="{{activeMode === 'register'}}">
+      <view class="form-label">昵称/姓名</view>
+      <input class="form-input" placeholder="可选，默认为账号名" value="{{form.name}}" data-field="name" bindinput="handleInput" />
+    </view>
+    <button class="btn-primary submit-btn" loading="{{isSubmitting}}" bindtap="handleSubmit">
+      {{activeMode === 'login' ? '立即登录' : '注册并登录'}}
+    </button>
+    <button class="btn-ghost back-btn" bindtap="goBackHome">返回首页</button>
+  </view>
+</view>
+

@@ -1,0 +1,124 @@
+<view class="page" wx:if="{{statistics}}">
+  <view class="section-card">
+    <view class="section-title">
+      <text>时间维度</text>
+      <text class="text-muted">{{rangeLabel}}</text>
+    </view>
+    <view class="time-tabs">
+      <view
+        class="time-tab {{activeMode === item.value ? 'active' : ''}}"
+        wx:for="{{timeModes}}"
+        wx:key="value"
+        data-value="{{item.value}}"
+        bindtap="handleModeChange"
+      >
+        {{item.label}}
+      </view>
+    </view>
+    <view class="custom-range" wx:if="{{activeMode === 'range'}}">
+      <picker mode="date" value="{{customRange.start}}" data-type="start" bindchange="handleRangeChange">
+        <view class="picker-value">开始：{{customRange.start}}</view>
+      </picker>
+      <picker mode="date" value="{{customRange.end}}" data-type="end" bindchange="handleRangeChange">
+        <view class="picker-value">结束：{{customRange.end}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-title">
+      <text>账单汇总</text>
+      <view class="pill">共 {{statistics.billCount}} 条</view>
+    </view>
+    <view class="summary-grid">
+      <view>
+        <text class="text-muted">支出</text>
+        <text class="amount">{{statistics.totals.expense}}</text>
+      </view>
+      <view>
+        <text class="text-muted">收入</text>
+        <text class="amount green">{{statistics.totals.income}}</text>
+      </view>
+      <view>
+        <text class="text-muted">结余</text>
+        <text class="amount">{{statistics.totals.balance}}</text>
+      </view>
+      <view>
+        <text class="text-muted">转账</text>
+        <text class="amount">{{statistics.totals.transfer}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-title">
+      <text>报销统计</text>
+    </view>
+    <view class="summary-grid small">
+      <view>
+        <text class="text-muted">待报销</text>
+        <text class="amount orange">{{statistics.reimburse.pending}}</text>
+      </view>
+      <view>
+        <text class="text-muted">已完成</text>
+        <text class="amount green">{{statistics.reimburse.done}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-title">
+      <text>支出分类详情</text>
+    </view>
+    <view class="breakdown-list">
+      <view class="breakdown-item" wx:for="{{statistics.expenseBreakdown}}" wx:key="name">
+        <view>{{item.name}}</view>
+        <view class="text-muted">{{item.amount}} · {{item.percent}}</view>
+      </view>
+      <view class="text-muted" wx:if="{{!statistics.expenseBreakdown.length}}">暂无支出记录</view>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-title">
+      <text>收入分类详情</text>
+    </view>
+    <view class="breakdown-list">
+      <view class="breakdown-item" wx:for="{{statistics.incomeBreakdown}}" wx:key="name">
+        <view>{{item.name}}</view>
+        <view class="text-muted">{{item.amount}} · {{item.percent}}</view>
+      </view>
+      <view class="text-muted" wx:if="{{!statistics.incomeBreakdown.length}}">暂无收入记录</view>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-title">
+      <text>账本对比</text>
+    </view>
+    <view class="ledger-summary" wx:if="{{statistics.ledgerSummary.length}}">
+      <view class="ledger-row" wx:for="{{statistics.ledgerSummary}}" wx:key="ledgerId">
+        <view class="ledger-name">{{item.ledgerName}}</view>
+        <view>
+          <view class="text-muted">支出 {{item.expense}}</view>
+          <view class="text-muted">收入 {{item.income}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="text-muted" wx:else>暂无账本数据</view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-title">
+      <text>流转统计</text>
+    </view>
+    <view class="breakdown-list">
+      <view class="breakdown-item" wx:for="{{statistics.flowSummary}}" wx:key="flowTag">
+        <view>{{item.flowTag}}</view>
+        <view class="text-muted">{{item.amount}}</view>
+      </view>
+      <view class="text-muted" wx:if="{{!statistics.flowSummary.length}}">暂无流转数据</view>
+    </view>
+  </view>
+</view>
+

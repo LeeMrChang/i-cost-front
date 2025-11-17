@@ -1,0 +1,61 @@
+<view class="page">
+  <view class="section-card" wx:for="{{ledgers}}" wx:key="id">
+    <view class="flex-between">
+      <view>
+        <view class="ledger-name">{{item.name}}</view>
+        <view class="text-muted">{{item.remark || '暂无备注'}}</view>
+      </view>
+      <view class="pill">{{item.category}}</view>
+    </view>
+    <view class="ledger-metrics">
+      <view>
+        <text class="text-muted">本月支出</text>
+        <text class="amount">{{item.expenseText}}</text>
+      </view>
+      <view>
+        <text class="text-muted">本月收入</text>
+        <text class="amount green">{{item.incomeText}}</text>
+      </view>
+      <view>
+        <text class="text-muted">预算结余</text>
+        <text class="amount">{{item.budgetRemainText}}</text>
+      </view>
+    </view>
+    <view class="ledger-actions">
+      <button class="btn-ghost" data-ledger="{{item}}" bindtap="handleEdit">编辑</button>
+      <button class="btn-ghost danger" data-ledger="{{item}}" bindtap="handleDelete">删除</button>
+    </view>
+  </view>
+
+  <view class="section-card form-card">
+    <view class="section-title">
+      <text>{{form.id ? '编辑账本' : '新增账本'}}</text>
+    </view>
+    <view class="form-item">
+      <view class="form-label">账本名称</view>
+      <input class="form-input" placeholder="必填，例如：默认账本" value="{{form.name}}" data-field="name" bindinput="handleInput" />
+    </view>
+    <view class="form-item">
+      <view class="form-label">预算 (¥)</view>
+      <input class="form-input" type="number" placeholder="可选，0 表示不设预算" value="{{form.budget}}" data-field="budget" bindinput="handleInput" />
+    </view>
+    <view class="form-item">
+      <view class="form-label">分类</view>
+      <picker range="{{categories}}" range-key="label" value="{{categoryIndex}}" bindchange="handleCategoryChange">
+        <view class="picker-value">{{categories[categoryIndex].label}}</view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <view class="form-label">备注</view>
+      <textarea
+        class="form-textarea"
+        placeholder="用途、共享范围等"
+        value="{{form.remark}}"
+        data-field="remark"
+        bindinput="handleInput"
+      ></textarea>
+    </view>
+    <button class="btn-primary" bindtap="handleSubmit">{{form.id ? '保存修改' : '创建账本'}}</button>
+  </view>
+</view>
+

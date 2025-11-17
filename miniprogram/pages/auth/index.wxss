@@ -1,0 +1,83 @@
+.auth-page {
+  min-height: 100vh;
+  padding: 60rpx 40rpx 120rpx;
+  background: linear-gradient(180deg, #f2fcfe 0%, #f5f7fa 45%, #ffffff 100%);
+  box-sizing: border-box;
+}
+
+.branding {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.logo {
+  font-size: 60rpx;
+  font-weight: 700;
+  color: #0abf88;
+}
+
+.subtitle {
+  color: #4c5d73;
+  margin-top: 10rpx;
+}
+
+.tips {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #8a96a3;
+}
+
+.tabs {
+  display: flex;
+  background: #ffffff;
+  border-radius: 999rpx;
+  padding: 6rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 10rpx 30rpx rgba(15, 52, 96, 0.08);
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 18rpx 0;
+  border-radius: 999rpx;
+  color: #6b7c93;
+  font-weight: 500;
+}
+
+.tab.active {
+  background: #0abf88;
+  color: #ffffff;
+}
+
+.form-card {
+  padding: 40rpx;
+}
+
+.form-item {
+  margin-bottom: 28rpx;
+}
+
+.form-label {
+  font-size: 28rpx;
+  color: #5c6b82;
+  margin-bottom: 12rpx;
+}
+
+.form-input {
+  width: 100%;
+  background: #f7fafc;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+.submit-btn {
+  margin-top: 12rpx;
+}
+
+.back-btn {
+  margin-top: 16rpx;
+  width: 100%;
+}
+

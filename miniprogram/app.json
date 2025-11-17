@@ -1,0 +1,53 @@
+{
+  "pages": [
+    "pages/auth/index",
+    "pages/dashboard/index",
+    "pages/ledger/index",
+    "pages/statistics/index",
+    "pages/assets/index",
+    "pages/bill-form/index",
+    "pages/icon-manager/index"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTitleText": "模拟 iCost",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#9AA0A6",
+    "selectedColor": "#0ABF88",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/dashboard/index",
+        "text": "首页",
+        "iconPath": "images/icons/home.png",
+        "selectedIconPath": "images/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/ledger/index",
+        "text": "账本",
+        "iconPath": "images/icons/business.png",
+        "selectedIconPath": "images/icons/business-active.png"
+      },
+      {
+        "pagePath": "pages/statistics/index",
+        "text": "统计",
+        "iconPath": "images/icons/statistic.png",
+        "selectedIconPath": "images/icons/statistic-active.png"
+      },
+      {
+        "pagePath": "pages/assets/index",
+        "text": "资产",
+        "iconPath": "images/icons/usercenter.png",
+        "selectedIconPath": "images/icons/usercenter-active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}
