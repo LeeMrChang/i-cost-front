@@ -51,10 +51,9 @@ Page({
     this.loadDashboard();
   },
   loadDashboard() {
-    const user = dataService.getUser();
+    const user = dataService.getUserInfo();
     const userView = {
-      totalAssets: formatCurrency(user.totalAssets),
-      balance: formatCurrency(user.balance),
+      totalAssets: formatCurrency(user.totalAssets)
     };
     const ledgers = dataService.listLedgers();
     const selectedLedgerId = this.data.selectedLedgerId || (ledgers[0] && ledgers[0].id);
@@ -110,5 +109,28 @@ Page({
   goToAuth() {
     wx.navigateTo({ url: '/pages/auth/index?force=1' });
   },
+  logoutAccount() {
+    wx.showModal({
+      title: '确认退出',
+      content: '确定要退出登录吗？',
+      success: (res) => {
+        if (res.confirm) {
+          // 调用 dataService 的退出登录方法
+          dataService.logoutAccount();
+          wx.showToast({
+            title: '已退出登录',
+            icon: 'success',
+            duration: 1500
+          });
+          //跳转到登录页
+          setTimeout(() => {
+            wx.reLaunch({
+              url: '/pages/auth/index'
+            });
+          }, 1500);
+        }
+      }
+    });
+  }
 });
 

@@ -2,12 +2,12 @@
   <view class="section-card user-card">
     <view class="flex-between">
       <view>
-        <view class="hello">你好，{{user.name || 'iCost 用户'}}</view>
+        <view class="hello">你好，{{user.nickname || 'iCost 用户'}}</view>
         <view class="text-muted">总资产 {{userView.totalAssets}}</view>
-        <view class="text-muted mt-8">资金余额 {{userView.balance}}</view>
-        <view class="switch-link" bindtap="goToAuth">切换账户 / 注册</view>
+        <view class="switch-link" bindtap="goToAuth">切换账户</view>
+        <button class="logout-btn" bindtap="logoutAccount" style="width: 150rpx;">退出登录</button>
       </view>
-      <image src="{{user.avatar || '/images/avatar.png'}}" class="avatar" mode="aspectFill"></image>
+      <image src="{{user.profile || '/images/avatar.png'}}" class="avatar" mode="aspectFill"></image>
     </view>
     <view class="action-row">
       <button class="btn-primary" bindtap="goToBillForm">快速记账</button>

@@ -118,3 +118,15 @@
   margin-bottom: 12rpx;
 }
 
+.logout-btn {
+  background-color: #6b6464;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px; /* 调整内边距 */
+  font-size: 14px; /* 调整字体大小 */
+  width: 30px; /* 设置宽度 */
+  height: 40px; /* 设置高度 */
+  margin-top: 10px;
+}
+

@@ -1,5 +1,4 @@
 const dataService = require('../../services/dataService');
-const { http } = require('../../utils/request'); 
 
 const modeTabs = [
   { label: '登录', value: 'login' },
@@ -82,10 +81,11 @@ Page({
     wx.showLoading({ title: '登录中...', mask: true });
     try {
       // 调用登录接口
-      const loginResult = await this.callLoginAPI({
+      const loginResult = await dataService.loginAccount({
         phoneNumber,
         password
       });
+      console.log("登录成功",loginResult);
       this.finishSubmit(loginResult, '登录成功');
     } catch (error) {
       wx.hideLoading();
@@ -154,7 +154,7 @@ Page({
       // }
 
       // 2. 调用注册接口
-      const registerResult = await this.callRegisterAPI({
+      const registerResult = await dataService.registerAccount({
         phoneNumber,
         password,
         nickname,
@@ -211,61 +211,6 @@ Page({
     });
   },
 
-    // 调用登录接口
-    async callLoginAPI(loginData) {
-      try {
-        console.log('发送登录数据:', loginData);
-        // 使用封装的 http.post 方法调用登录接口
-        const result = await http.post('/user/login', loginData);  
-        console.log('登录接口返回:', result);
-        console.log('返回code:', result.code);  
-        if (result.code === 1) {
-          return {
-            success: true,
-            message: result.message,
-            data: result.data
-          };
-        } else {
-          return {
-            success: false,
-            message: result.message || '登录失败'
-          };
-        }
-      } catch (error) {
-        console.error('登录请求失败:', error);
-        return {
-          success: false,
-          message: error.message
-        };
-      }
-    },
-
-  // 调用注册接口
-  async callRegisterAPI(userData) {
-    try {
-      // 使用封装的 http.post 方法
-      const result = await http.post('/user/register', userData);
-      if (result.code === 1) {
-        return {
-          success: true,
-          message: result.message,
-          data: result.data
-        };
-      } else {
-        return {
-          success: false,
-          message: result.message || '注册失败'
-        };
-      }
-    } catch (error) {
-      console.error('注册请求失败:', error);
-      return {
-        success: false,
-        message: error.message
-      };
-    }
-  },
-
   finishSubmit(result, successMessage) {
     wx.hideLoading();
     this.setData({ isSubmitting: false });
@@ -286,8 +231,8 @@ Page({
     });
 
     // 如果是注册成功，保存用户信息
-    if (result.data && result.data.user) {
-      dataService.setUser(result.data.user);
+    if (result.data) {
+      dataService.setUser(result.data);
       if (result.data.token) {
         dataService.setToken(result.data.token);
       }

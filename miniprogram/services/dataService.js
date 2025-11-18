@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'ICOST_STATE_V1';
+const { http } = require('../utils/request'); 
 
 const defaultAccount = {
   id: 'account-demo',
@@ -272,6 +273,45 @@ function getStateSnapshot() {
 }
 
 function getUser() {
+  // 1. 优先从服务器存储获取用户信息
+  const serverUser = getUserInfo();
+  if (serverUser && serverUser.id) {
+    // 同步服务器数据到本地状态
+    withState((state) => {
+      state.currentUserId = serverUser.id;
+      state.user = Object.assign({}, state.user, {
+        id: serverUser.id,
+        name: serverUser.name || serverUser.nickname || '用户',
+        avatar: serverUser.profile || '/images/avatar.png',
+        totalAssets: serverUser.totalAssets || 0,
+      });
+      
+      // 同时更新账户信息
+      const accountIndex = state.accounts.findIndex(acc => acc.id === serverUser.id);
+      if (accountIndex > -1) {
+        state.accounts[accountIndex] = Object.assign({}, state.accounts[accountIndex], {
+          name: state.user.name,
+          avatar: state.user.profile,
+          totalAssets: state.user.totalAssets,
+        });
+      } else {
+        // 如果本地没有对应账户，创建一个
+        state.accounts.push({
+          id: serverUser.id,
+          username: serverUser.phoneNumber || serverUser.id,
+          password: '', // 服务器登录不需要密码
+          name: serverUser.name || serverUser.nickname,
+          avatar: serverUser.profile || '/images/avatar.png',
+          totalAssets: serverUser.totalAssets || 0,
+        });
+      }
+    });
+    persist();
+    
+    return clone(serverUser);
+  }
+  
+  // 2. 回退到本地账户逻辑（原有代码）
   const state = ensureState();
   const account = state.accounts.find((item) => item.id === state.currentUserId);
   if (account) {
@@ -543,67 +583,118 @@ function listAccounts() {
   return clone(ensureState().accounts);
 }
 
-function registerAccount(payload = {}) {
-  const username = (payload.username || '').trim();
-  const password = (payload.password || '').trim();
-  if (!username || !password) {
-    return { success: false, message: '请输入手机号和密码' };
-  }
-  let response = { success: false, message: '' };
-  withState((state) => {
-    if (findAccountByUsername(state, username)) {
-      response = { success: false, message: '用户名已存在' };
-      return;
+async function registerAccount(userData) {
+  try {
+    const result = await http.post('/user/register', userData);
+    if (result.code === 1) {
+      // 保存用户信息和token
+      if (result.data) {
+        if (result.data) {
+          setUser(result.data);
+        }
+        // if (result.data.token) {
+        //   setToken(result.data.token);
+        // }
+      }
+      return {
+        success: true,
+        message: result.message,
+        data: result.data
+      };
+    } else {
+      return {
+        success: false,
+        message: result.message || '注册失败'
+      };
     }
-    const account = {
-      id: generateId('account'),
-      username,
-      password,
-      name: payload.name || username,
-      avatar: payload.avatar || '/images/avatar.png',
-      totalAssets: payload.totalAssets ?? state.user.totalAssets ?? 0,
-      balance: payload.balance ?? state.user.balance ?? 0,
+  } catch (error) {
+    console.error('注册请求失败:', error);
+    return {
+      success: false,
+      message: error.message
     };
-    state.accounts.push(account);
-    state.currentUserId = account.id;
-    syncUserFromAccount(state, account);
-    response = { success: true, user: clone(state.user) };
-  });
-  if (!response.success && !response.message) {
-    response.message = '注册失败';
   }
-  return response;
 }
 
-function loginAccount(payload = {}) {
-  const username = (payload.username || '').trim();
-  const password = (payload.password || '').trim();
-  if (!username || !password) {
-    return { success: false, message: '请输入用户名和密码' };
+async function loginAccount(loginData) {
+  try {
+    const result = await http.post('/user/login', loginData);  
+    if (result.code === 1) {
+      // 保存用户信息和token
+      if (result.data) {
+        if (result.data) {
+          setUser(result.data);
+        }
+        // if (result.data.token) {
+        //   setToken(result.data.token);
+        // }
+      }
+      return {
+        success: true,
+        message: result.message,
+        data: result.data
+      };
+    } else {
+      return {
+        success: false,
+        message: result.message || '登录失败'
+      };
+    }
+  } catch (error) {
+    console.error('登录请求失败:', error);
+    return {
+      success: false,
+      message: error.message
+    };
   }
-  const state = ensureState();
-  const account = findAccountByUsername(state, username);
-  if (!account || account.password !== password) {
-    return { success: false, message: '账号或密码错误' };
-  }
-  state.currentUserId = account.id;
-  syncUserFromAccount(state, account);
-  persist();
-  return { success: true, user: clone(state.user) };
 }
 
-function logoutAccount() {
-  withState((state) => {
-    state.currentUserId = null;
-    state.user = {
-      id: '',
-      name: '未登录用户',
-      avatar: '/images/avatar.png',
-      totalAssets: 0,
-      balance: 0,
-    };
-  });
-  return clone(ensureState().user);
+async function logoutAccount() {
+  try {
+    // 1. 清除本地存储的用户信息和token
+    //clearToken(); // 清除token
+    try {
+      wx.removeStorageSync('USER_INFO');
+    } catch (err) {
+      console.warn('清除本地用户信息失败', err);
+    }
+    
+    // 2. 重置应用状态
+    withState((state) => {
+      state.currentUserId = null;
+      state.user = {
+        id: '',
+        name: '未登录用户',
+        avatar: '/images/avatar.png',
+        totalAssets: 0,
+        balance: 0,
+      };
+    });
+    // 3. 持久化状态
+    persist();
+    return clone(ensureState().user);
+    
+  } catch (error) {
+    console.error('退出登录过程中发生错误:', error);
+    throw error;
+  }
+}
+
+// 用户信息存储（用于保存服务器返回的用户信息）
+function setUser(userInfo) {
+  try {
+    wx.setStorageSync('USER_INFO', userInfo);
+  } catch (err) {
+    console.warn('用户信息存储失败', err);
+  }
+}
+
+function getUserInfo() {
+  try {
+    return wx.getStorageSync('USER_INFO');
+  } catch (err) {
+    return null;
+  }
 }
 
 module.exports = {
@@ -626,5 +717,7 @@ module.exports = {
   updateAssets,
   getStatistics,
   getQuickSnapshot,
+  setUser,
+  getUserInfo,
 };
 
